@@ -1,4 +1,4 @@
-# awis
+# awis [![Build Status](https://secure.travis-ci.org/wrangr/awis.png)](http://travis-ci.org/wrangr/awis)
 
 [Node.js](http://nodejs.org/) client for the [Alexa Web Information
 Service](http://aws.amazon.com/awis/).
