@@ -1,19 +1,3 @@
-// # Alexa Web Information Service
-// http://docs.aws.amazon.com/AlexaWebInfoService/latest/
-//
-// ## Actions
-//
-// UrlInfo - get information about pages and sites on the web - their traffic,
-// content, and related sites
-//
-// TrafficHistory - get a history of traffic rank
-//
-// CategoryBrowse, CategoryListings - get lists of sites within a specific
-// category ordered by traffic rank, or create a browseable directory of websites
-//
-// SitesLinkingIn - get a list of sites linking in to a specified site
-//
-
 var util = require('util');
 var crypto = require('crypto');
 var _ = require('underscore');

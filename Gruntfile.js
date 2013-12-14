@@ -4,7 +4,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
   grunt.initConfig({
-    jshint: { all: [ 'Gruntfile.js', 'index.js', 'test.js' ] },
+    jshint: { all: [ '*.js' ] },
     nodeunit: { all: [ 'test.js' ] }
   });
 

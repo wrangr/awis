@@ -26,3 +26,22 @@ awis({
 });
 ```
 
+## Actions
+
+* `UrlInfo` - get information about pages and sites on the web - their traffic,
+  content, and related sites.
+
+* `TrafficHistory` - get a history of traffic rank.
+
+* `CategoryBrowse`, `CategoryListings` - get lists of sites within a specific
+category ordered by traffic rank, or create a browseable directory of websites.
+
+`SitesLinkingIn` - get a list of sites linking in to a specified site.
+
+For more details please check the [Alexa Web Information Service
+documentation](http://docs.aws.amazon.com/AlexaWebInfoService/latest/).
+
+
+## License
+
+[The MIT License](https://github.com/wrangr/awis/blob/master/LICENSE)
