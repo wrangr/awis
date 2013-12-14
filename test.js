@@ -8,16 +8,16 @@ exports.test1 = function (t) {
   var client = awis(options);
   client({
     'Action': 'UrlInfo',
-    'Url': 'enoi.se',
+    'Url': 'github.com',
     'ResponseGroup': 'Related,TrafficData,ContentData'
   }, function (err, res) {
     t.ok(!err);
     t.ok(res.contentData);
-    t.equal(res.contentData.dataUrl, 'enoi.se');
+    t.equal(res.contentData.dataUrl, 'github.com');
     t.ok(res.trafficData);
-    t.equal(res.trafficData.dataUrl, 'enoi.se');
+    t.equal(res.trafficData.dataUrl, 'github.com');
     t.ok(res.related);
-    t.equal(res.related.dataUrl, 'enoi.se');
+    t.equal(res.related.dataUrl, 'github.com');
     t.done();
   });
 };
