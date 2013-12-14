@@ -1,0 +1,33 @@
+{
+  "name": "awis",
+  "description": "Node.js client for the Alexa Web Information Service.",
+  "version": "0.0.0",
+  "author": "WRANGR <hi@wrangr.com>",
+  "maintainers": [
+    "lupomontero <lupomontero@gmail.com> (http://lupomontero.com)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wrangr/awis.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wrangr/awis/issues"
+  },
+  "dependencies": {
+    "underscore": "~1.5.2",
+    "xml2js": "~0.4.0",
+    "request": "~2.27.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-nodeunit": "~0.2.2",
+    "grunt-contrib-jshint": "~0.7.2"
+  },
+  "scripts": {
+    "test": "grunt --verbose"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "node": "0.8.x"
+  }
+}
