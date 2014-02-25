@@ -1,4 +1,10 @@
-# awis [![Build Status](https://secure.travis-ci.org/wrangr/awis.png)](http://travis-ci.org/wrangr/awis)
+# awis
+
+[![NPM](https://nodei.co/npm/awis.png?compact=true)](https://nodei.co/npm/awis/)
+
+[![Build Status](https://secure.travis-ci.org/wrangr/awis.png)](http://travis-ci.org/wrangr/awis)
+[![Dependency Status](https://david-dm.org/wrangr/awis.png)](https://david-dm.org/wrangr/awis) 
+[![devDependency Status](https://david-dm.org/wrangr/awis/dev-status.png)](https://david-dm.org/wrangr/awis#info=devDependencies)
 
 [Node.js](http://nodejs.org/) client for the [Alexa Web Information
 Service](http://aws.amazon.com/awis/).
