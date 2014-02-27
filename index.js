@@ -1,6 +1,6 @@
 var util = require('util');
 var crypto = require('crypto');
-var _ = require('underscore');
+var _ = require('lodash');
 var xml2js = require('xml2js');
 var apiDomain = 'awis.amazonaws.com';
 var request = require('request').defaults({ url: 'http://' + apiDomain });
