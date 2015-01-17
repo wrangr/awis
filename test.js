@@ -153,3 +153,22 @@ exports.testSitesLinkingIn = function (t) {
   });
 };
 
+exports.testBatchRequestRank = function (t) {
+  var client = awis(options);
+  client({
+    Action: 'UrlInfo',
+    'UrlInfo.Shared.ResponseGroup': 'Rank',
+    'UrlInfo.1.Url': 'lupomontero.com',
+    'UrlInfo.2.Url': 'yahoo.com',
+    'UrlInfo.3.Url': 'weibo.com',
+    'UrlInfo.4.Url': 'github.com',
+    'UrlInfo.5.Url': 'monono.org'
+  }, function (err, res) {
+    t.ok(!err);
+    t.ok(res.length === 5);
+    res.forEach(function (response) {
+      t.ok(response.trafficData.dataUrl);
+    });
+    t.done();
+  });
+};
