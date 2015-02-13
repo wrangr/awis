@@ -18,13 +18,13 @@
     "url": "https://github.com/wrangr/awis/issues"
   },
   "dependencies": {
-    "lodash": "^2.4.1",
+    "lodash": "^3.2.0",
     "request": "^2.51.0",
     "xml2js": "~0.4.0"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
-    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-jshint": "^0.11.0",
     "grunt-contrib-nodeunit": "~0.4.0"
   },
   "scripts": {
