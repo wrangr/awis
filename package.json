@@ -6,6 +6,7 @@
     "awis",
     "alexa"
   ],
+  "license": "MIT",
   "author": "WRANGR <hi@wrangr.com>",
   "maintainers": [
     "lupomontero <lupomontero@gmail.com> (http://lupomontero.com)"
@@ -18,9 +19,9 @@
     "url": "https://github.com/wrangr/awis/issues"
   },
   "dependencies": {
-    "lodash": "^3.8.0",
-    "request": "^2.55.0",
-    "xml2js": "~0.4.8"
+    "lodash": "^3.10.0",
+    "request": "^2.59.0",
+    "xml2js": "~0.4.9"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
