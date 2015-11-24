@@ -176,6 +176,25 @@ describe('awis', function () {
     });
   });
 
+  it('should allow apostrophe in path when doing CategoryBrowse', function (done) {
+    var client = awis(options);
+    client({
+      Action: 'CategoryBrowse',
+      ResponseGroup: 'Categories',
+      Path: 'Top/Shopping/Clothing/Children\'s'
+    }, function (err, res) {
+      assert.ok(!err);
+      assert.ok(res.categoryBrowse.categories.category);
+      assert.equal(typeof res.categoryBrowse.categories.category.length, 'number');
+      assert.ok(res.categoryBrowse.categories.category.length > 0);
+      res.categoryBrowse.categories.category.forEach(function (item) {
+        assert.equal(typeof item.path, 'string');
+        assert.equal(typeof item.title, 'string');
+      });
+      done();
+    });
+  });
+
 });
 
 

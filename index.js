@@ -102,7 +102,11 @@ function query(req, options) {
   var keys = Object.keys(req).sort();
   var q = keys.reduce(function (memo, k) {
     if (memo) { memo += '&'; }
-    return memo + encodeURIComponent(k) + '=' + encodeURIComponent(req[k]);
+    // Manually replace single quotes with `%27` as `encodeURIComponent` doesnt
+    // seem to encode them, and things break:
+    // https://github.com/wrangr/awis/issues/3
+    var value = encodeURIComponent(req[k]).replace(/'/g, '%27');
+    return memo + encodeURIComponent(k) + '=' + value;
   }, '');
   var tmpl = 'GET\n%s\n/\n%s';
   var stringToSign = util.format(tmpl, apiDomain, q);
