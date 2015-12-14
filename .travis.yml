@@ -1,13 +1,10 @@
 language: node_js
 node_js:
-  - 0.10
-  - 0.12
   - 4
+  - 5
 env:
   global:
     - secure: "DuoaTYhMvvQ0Av+4cGAS3lz7Zm9G6LILkidO41a6y94OhC2bgjqD01YnDeqixDp+lZNoCnuWxgjmCvYF3gqxigxj0jkq1NPwG9eqpZocr4hrlYLAAaYpM4SSNeRBPEgOcN01Biy3B4RVEQPlj9BglY1LI0mD+7xQhLkOJ4ZfAdQ="
     - secure: "W+Us/qYgTm9QLLqHbx/jBpw+eUmbfjh6limI0Y3Q9mIbiUFGn1xoQ2NlnG7YytXvP+J88nrkHKR2Q7+Y/Vfn3t2xmvbXF/oCpmOgG8ynUD87w+ASsYMg3XunPIiFkiqZudJ2PfVZNflSPEKl73flg/DZVY7Zw+ogJjNXEvsMAE0="
-before_script:
-  - npm install -g gulp
 sudo: false
 
