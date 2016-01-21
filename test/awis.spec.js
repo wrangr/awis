@@ -3,6 +3,7 @@
 
 const Assert = require('assert');
 const Awis = require('../');
+const _ = require('underscore');
 
 
 const options = {
@@ -228,6 +229,23 @@ describe('Awis', () => {
     });
   });
 
+
+  it('should return element attributes', (done) => {
+    _(options).extend({'explicitAttributes': true});
+    Awis(options)({
+      'Action': 'UrlInfo',
+      'Url': 'github.com',
+      'ResponseGroup': 'RankByCountry'
+    }, (err, res) => {
+
+      Assert.ok(!err);
+      Assert.ok(res.trafficData.dataUrl.element == 'github.com/');
+      res.trafficData.rankByCountry.country.forEach((country) => {
+        Assert.ok(country.hasOwnProperty('attrs'));
+      });
+      done();
+    });
+  });
 
 });
 

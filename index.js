@@ -48,7 +48,7 @@ internals.walk = function (data) {
 };
 
 
-internals.parse = function (xml, req, cb) {
+internals.parse = function (xml, req, cb, explicitAttributes) {
 
   const action = req.Action;
   const responseKey = 'aws:' + action + 'Response';
@@ -76,9 +76,18 @@ internals.parse = function (xml, req, cb) {
     data = data[actionResultKey][0]['aws:Alexa'][0];
     return internals.walk(data);
   };
+  if (explicitAttributes) {
+    var ignoreAttrs = false;
+    var attrkey = 'attrs';
+    var charkey = 'element'
+  } else {
+    var ignoreAttrs = true;
+    var attrkey = '';
+    var charkey = ''
+  }
 
 
-  Xml2js.parseString(xml, { ignoreAttrs: true, trim: true }, (err, data) => {
+  Xml2js.parseString(xml, { ignoreAttrs: ignoreAttrs, attrkey: attrkey, trim: true, charkey: charkey }, (err, data) => {
 
     if (err) {
       return cb(err);
@@ -174,7 +183,7 @@ module.exports = function (options) {
         return cb(err);
       }
 
-      internals.parse(res.body, req, cb);
+      internals.parse(res.body, req, cb, options.explicitAttributes);
     });
   };
 };
