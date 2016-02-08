@@ -19,15 +19,15 @@
     "url": "https://github.com/wrangr/awis/issues"
   },
   "dependencies": {
-    "lodash": "^3.10.1",
-    "request": "^2.64.0",
-    "xml2js": "~0.4.12"
+    "lodash": "^4.3.0",
+    "request": "^2.69.0",
+    "xml2js": "~0.4.16"
   },
   "devDependencies": {
     "eslint": "^1.10.3",
-    "eslint-config-hapi": "^8.0.0",
+    "eslint-config-hapi": "^8.0.1",
     "eslint-plugin-hapi": "^4.0.0",
-    "mocha": "^2.3.4"
+    "mocha": "^2.4.5"
   },
   "scripts": {
     "pretest": "./node_modules/.bin/eslint .",
