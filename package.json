@@ -20,12 +20,12 @@
   },
   "dependencies": {
     "lodash": "^4.3.0",
-    "request": "^2.69.0",
-    "xml2js": "~0.4.16"
+    "request": "^2.73.0",
+    "xml2js": "~0.4.17"
   },
   "devDependencies": {
-    "eslint": "^1.10.3",
-    "eslint-config-hapi": "^8.0.1",
+    "eslint": "^3.1.0",
+    "eslint-config-hapi": "^9.1.0",
     "eslint-plugin-hapi": "^4.0.0",
     "mocha": "^2.4.5"
   },
