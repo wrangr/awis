@@ -137,14 +137,14 @@ describe('Awis', () => {
 
     Awis(options)({
       'Action': 'TrafficHistory',
-      'Url': 'lupomontero.com',
+      'Url': 'google.com',
       'ResponseGroup': 'History'
     }, (err, res) => {
 
       Assert.ok(!err);
       Assert.ok(res.trafficHistory);
       Assert.ok(res.trafficHistory.range);
-      Assert.equal(res.trafficHistory.site, 'lupomontero.com');
+      Assert.equal(res.trafficHistory.site, 'google.com');
       Assert.ok(res.trafficHistory.start);
       Assert.ok(res.trafficHistory.historicalData);
       Assert.ok(res.trafficHistory.historicalData.data);
@@ -230,4 +230,3 @@ describe('Awis', () => {
 
 
 });
-
