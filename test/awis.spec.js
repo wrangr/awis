@@ -133,6 +133,31 @@ describe('Awis', () => {
   });
 
 
+  it('should get rank by country', (done) => {
+
+    Awis(options)({
+      'Action': 'UrlInfo',
+      'Url': 'yahoo.com',
+      'ResponseGroup': 'RankByCountry',
+      'Count': 20
+    }, (err, res) => {
+
+      Assert.ok(!err);
+      Assert.ok(res.trafficData);
+      Assert.ok(res.trafficData.rankByCountry);
+      Assert.ok(res.trafficData.rankByCountry.country);
+      Assert.ok(res.trafficData.rankByCountry.country.length);
+      res.trafficData.rankByCountry.country.forEach((item) => {
+
+        Assert.equal(typeof item.code, 'string');
+        Assert.equal(typeof item.rank, 'string');
+        Assert.ok(item.contribution);
+      });
+      done();
+    });
+  });
+
+
   it('should get traffic history', (done) => {
 
     Awis(options)({
