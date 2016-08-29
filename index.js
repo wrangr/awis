@@ -36,6 +36,9 @@ internals.walk = function (data) {
     }
   }
   else if (_.isObject(data)) {
+    if (data._) {
+      return data._;
+    }
     return _.reduce(data, (memo, v, k) => {
 
       memo[internals.formatTagName(k)] = internals.walk(v);
@@ -78,7 +81,7 @@ internals.parse = function (xml, req, cb) {
   };
 
 
-  Xml2js.parseString(xml, { ignoreAttrs: true, trim: true }, (err, data) => {
+  Xml2js.parseString(xml, { mergeAttrs: true, trim: true }, (err, data) => {
 
     if (err) {
       return cb(err);
