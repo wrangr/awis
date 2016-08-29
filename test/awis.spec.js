@@ -148,6 +148,7 @@ describe('Awis', () => {
       Assert.ok(res.trafficData.rankByCountry.country);
       Assert.ok(res.trafficData.rankByCountry.country.length);
       res.trafficData.rankByCountry.country.forEach((item) => {
+
         Assert.equal(typeof item.code, 'string');
         Assert.equal(typeof item.rank, 'string');
         Assert.ok(item.contribution);
