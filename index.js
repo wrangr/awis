@@ -7,10 +7,7 @@ const Xml2js = require('xml2js');
 const Request = require('request');
 
 
-const internals = {
-  apiDomain: 'awis.amazonaws.com'
-};
-
+const internals = {};
 
 
 internals.formatTagName = function (name) {
@@ -132,7 +129,7 @@ internals.parse = function (xml, req, cb) {
 };
 
 
-internals.query = function (req, options) {
+internals.query = function (req, apiDomain, options) {
 
   req.SignatureMethod = 'HmacSHA256';
   req.SignatureVersion = 2;
@@ -155,7 +152,7 @@ internals.query = function (req, options) {
     return memo + encodeURIComponent(k) + '=' + value;
   }, '');
   const tmpl = 'GET\n%s\n/\n%s';
-  const stringToSign = Util.format(tmpl, internals.apiDomain, q);
+  const stringToSign = Util.format(tmpl, apiDomain, q);
   const signature = Crypto.createHmac('SHA256', options.secret);
   signature.update(stringToSign);
   req.Signature = signature.digest('base64');
@@ -168,9 +165,11 @@ module.exports = function (options) {
 
   return function (req, cb) {
 
+    const apiDomain = (req.Action === 'TopSites') ? 'ats.amazonaws.com' : 'awis.amazonaws.com';
+
     Request({
-      url: 'http://' + internals.apiDomain,
-      qs: internals.query(req, options)
+      url: 'http://' + apiDomain,
+      qs: internals.query(req, apiDomain, options)
     }, (err, res) => {
 
       if (err) {
@@ -181,4 +180,3 @@ module.exports = function (options) {
     });
   };
 };
-

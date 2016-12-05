@@ -254,4 +254,35 @@ describe('Awis', () => {
   });
 
 
+  it('should allow to query Alexa TopSites', (done) => {
+
+    Awis(options)({
+      Action: 'TopSites',
+      CountryCode: 'PE',
+      Start: 1,
+      Count: 100,
+      ResponseGroup: 'Country'
+    }, (err, res) => {
+
+      Assert.ok(!err);
+      Assert.equal(res.topSites.country.countryName, 'Peru');
+      Assert.equal(res.topSites.country.countryCode, 'PE');
+      Assert.equal(typeof res.topSites.country.totalSites, 'string');
+      Assert.equal(res.topSites.country.sites.site.length, 100);
+
+      res.topSites.country.sites.site.forEach((site) => {
+
+        Assert.equal(typeof site.dataUrl, 'string');
+        Assert.equal(typeof site.country.rank, 'string');
+        Assert.equal(typeof site.country.reach.perMillion, 'string');
+        Assert.equal(typeof site.country.pageViews.perMillion, 'string');
+        Assert.equal(typeof site.country.pageViews.perUser, 'string');
+        Assert.equal(typeof site.global.rank, 'string');
+      });
+
+      done();
+    });
+  });
+
+
 });
