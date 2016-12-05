@@ -1,6 +1,6 @@
 {
   "name": "awis",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Node.js client for the Alexa Web Information Service.",
   "keywords": [
     "awis",
