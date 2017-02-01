@@ -3,6 +3,7 @@ node_js:
   - 4
   - 5
   - 6
+  - 7
 env:
   global:
     - secure: "DuoaTYhMvvQ0Av+4cGAS3lz7Zm9G6LILkidO41a6y94OhC2bgjqD01YnDeqixDp+lZNoCnuWxgjmCvYF3gqxigxj0jkq1NPwG9eqpZocr4hrlYLAAaYpM4SSNeRBPEgOcN01Biy3B4RVEQPlj9BglY1LI0mD+7xQhLkOJ4ZfAdQ="
