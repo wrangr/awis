@@ -7,7 +7,8 @@
 [![devDependency Status](https://david-dm.org/wrangr/awis/dev-status.png)](https://david-dm.org/wrangr/awis#info=devDependencies)
 
 [Node.js](http://nodejs.org/) client for the [Alexa Web Information
-Service](http://aws.amazon.com/awis/).
+Service](http://aws.amazon.com/awis/) and
+[Alexa Top Sites](https://aws.amazon.com/alexa-top-sites/).
 
 ## Installation
 
@@ -55,6 +56,25 @@ client({
   });
 });
 ```
+
+Note that you can also query the
+[`TopSites`](https://aws.amazon.com/alexa-top-sites/) API. For example:
+
+```js
+client({
+  Action: 'TopSites',
+  CountryCode: 'PE',
+  Start: 1,
+  Count: 100,
+  ResponseGroup: 'Country'
+}, function (err, res) {
+
+  //...
+});
+```
+
+For full details on query options for the TopSites API please check the
+[official documentation](https://aws.amazon.com/alexa-top-sites/).
 
 ## API
 
