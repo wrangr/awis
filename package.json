@@ -24,7 +24,7 @@
     "xml2js": "~0.4.17"
   },
   "devDependencies": {
-    "eslint": "^3.19.0",
+    "eslint": "^4.1.0",
     "eslint-config-hapi": "^10.0.0",
     "eslint-plugin-hapi": "^4.0.0",
     "mocha": "^3.4.0"
