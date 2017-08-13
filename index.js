@@ -168,7 +168,7 @@ module.exports = function (options) {
     const apiDomain = (req.Action === 'TopSites') ? 'ats.amazonaws.com' : 'awis.amazonaws.com';
 
     Request({
-      url: 'http://' + apiDomain,
+      url: 'https://' + apiDomain,
       qs: internals.query(req, apiDomain, options)
     }, (err, res) => {
 
