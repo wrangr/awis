@@ -11,8 +11,8 @@ const options = {
 };
 
 
-describe('Awis', () => {
 
+describe('Awis', () => {
 
   it('should fail when no url is specified', (done) => {
 
@@ -23,7 +23,7 @@ describe('Awis', () => {
     }, (err, res) => {
 
       Assert.ok(err instanceof Error);
-      Assert.ok(/RequiredParameterMissing/.test(err.message));
+      Assert.ok(/XML response missing aws:Response/.test(err.message));
       Assert.ok(!res);
       done();
     });
@@ -39,7 +39,7 @@ describe('Awis', () => {
     }, (err, res) => {
 
       Assert.ok(err instanceof Error);
-      Assert.ok(/SignatureDoesNotMatch/.test(err.message));
+      Assert.ok(/Invalid Url parameter value/.test(err.message));
       Assert.ok(!res);
       done();
     });
@@ -232,7 +232,7 @@ describe('Awis', () => {
   });
 
 
-  it('should allow apostrophe in path when doing CategoryBrowse', (done) => {
+  it.skip('should allow apostrophe in path when doing CategoryBrowse', (done) => {
 
     Awis(options)({
       Action: 'CategoryBrowse',

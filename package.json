@@ -19,11 +19,13 @@
     "url": "https://github.com/wrangr/awis/issues"
   },
   "dependencies": {
+    "aws4": "^1.6.0",
     "lodash": "^4.17.4",
     "request": "^2.81.0",
     "xml2js": "^0.4.18"
   },
   "devDependencies": {
+    "dotenv": "^4.0.0",
     "eslint": "^4.1.0",
     "eslint-config-hapi": "^11.0.0",
     "eslint-plugin-hapi": "^4.0.0",
@@ -31,7 +33,7 @@
   },
   "scripts": {
     "pretest": "./node_modules/.bin/eslint .",
-    "test": "./node_modules/.bin/mocha test"
+    "test": "./node_modules/.bin/mocha -r dotenv/config --timeout=10000 test"
   },
   "engines": {
     "node": ">= 4.0.x"

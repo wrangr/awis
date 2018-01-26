@@ -5,6 +5,9 @@ const Crypto = require('crypto');
 const _ = require('lodash');
 const Xml2js = require('xml2js');
 const Request = require('request');
+const Url = require('url');
+const Aws4 = require('aws4');
+const Querystring = require('querystring');
 
 
 const internals = {};
@@ -165,12 +168,32 @@ module.exports = function (options) {
 
   return function (req, cb) {
 
-    const apiDomain = (req.Action === 'TopSites') ? 'ats.amazonaws.com' : 'awis.amazonaws.com';
+    const host = (req.Action === 'TopSites') ? 'ats.us-west-1.amazonaws.com' : 'awis.us-west-1.amazonaws.com';
+    const service = (req.Action === 'TopSites') ? 'AlexaTopSites' : 'awis';
+    const pathname = '/api';
+    const search = Querystring.stringify(req, null, null, {
+      encodeURIComponent(uriComponent) {
 
-    Request({
-      url: 'https://' + apiDomain,
-      qs: internals.query(req, apiDomain, options)
-    }, (err, res) => {
+        return Querystring.escape(uriComponent).replace(/'/g, '%27');
+      }
+    });
+    const path = pathname + '?' + search;
+    const url = Url.format({ protocol: 'https:', host, pathname, search });
+
+    const signOpts = {
+      url,
+      host,
+      service,
+      path
+    };
+
+    const signRes = Aws4.sign(signOpts, {
+      accessKeyId: options.key,
+      secretAccessKey: options.secret,
+      service
+    });
+
+    Request(signRes, (err, res) => {
 
       if (err) {
         return cb(err);
