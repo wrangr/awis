@@ -232,7 +232,7 @@ describe('Awis', () => {
   });
 
 
-  it.skip('should allow apostrophe in path when doing CategoryBrowse', (done) => {
+  it('should allow apostrophe in path when doing CategoryBrowse', (done) => {
 
     Awis(options)({
       Action: 'CategoryBrowse',
