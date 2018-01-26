@@ -155,8 +155,7 @@ module.exports = function (options) {
 
     const signRes = Aws4.sign(signOpts, {
       accessKeyId: options.key,
-      secretAccessKey: options.secret,
-      service
+      secretAccessKey: options.secret
     });
 
     Request(signRes, (err, res) => {
