@@ -19,6 +19,14 @@ $ npm install --save awis
 
 ## Usage
 
+Authentication:
+
+From 01/02/2018 onward AWIS will start requiring an AWIS-policy-granted IAM user instead of the root account user.
+Refer to the following guides to create the right policies for your IAM user:
+
+- [How to Make Requests to the Alexa Web Information Service](https://docs.aws.amazon.com/AlexaWebInfoService/latest/MakingRequestsChapter.html)
+- [How to Make Requests to Alexa Top Sites](https://docs.aws.amazon.com/AlexaTopSites/latest/MakingRequestsChapter.html)
+
 Basic usage:
 
 ```javascript
