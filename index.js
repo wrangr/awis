@@ -1,7 +1,5 @@
 'use strict';
 
-const Util = require('util');
-const Crypto = require('crypto');
 const _ = require('lodash');
 const Xml2js = require('xml2js');
 const Request = require('request');
@@ -129,38 +127,6 @@ internals.parse = function (xml, req, cb) {
 
     cb(null, all);
   });
-};
-
-
-internals.query = function (req, apiDomain, options) {
-
-  req.SignatureMethod = 'HmacSHA256';
-  req.SignatureVersion = 2;
-  req.AWSAccessKeyId = options.key;
-  req.Timestamp = new Date().toISOString();
-
-  // Sign...
-  // Request keys must be sorted with natural byte ordering.
-  // http://docs.aws.amazon.com/AlexaWebInfoService/latest/index.html?CalculatingSignatures.html
-  const keys = Object.keys(req).sort();
-  const q = keys.reduce((memo, k) => {
-
-    if (memo) {
-      memo += '&';
-    }
-    // Manually replace single quotes with `%27` as `encodeURIComponent` doesnt
-    // seem to encode them, and things break:
-    // https://github.com/wrangr/awis/issues/3
-    const value = encodeURIComponent(req[k]).replace(/'/g, '%27');
-    return memo + encodeURIComponent(k) + '=' + value;
-  }, '');
-  const tmpl = 'GET\n%s\n/\n%s';
-  const stringToSign = Util.format(tmpl, apiDomain, q);
-  const signature = Crypto.createHmac('SHA256', options.secret);
-  signature.update(stringToSign);
-  req.Signature = signature.digest('base64');
-
-  return req;
 };
 
 
