@@ -23,7 +23,7 @@ describe('Awis', () => {
     }, (err, res) => {
 
       Assert.ok(err instanceof Error);
-      Assert.ok(/RequiredParameterMissing/.test(err.message));
+      Assert.ok(/XML response missing aws:Response/.test(err.message));
       Assert.ok(!res);
       done();
     });
@@ -39,7 +39,7 @@ describe('Awis', () => {
     }, (err, res) => {
 
       Assert.ok(err instanceof Error);
-      Assert.ok(/SignatureDoesNotMatch/.test(err.message));
+      Assert.ok(/Invalid Url parameter value/.test(err.message));
       Assert.ok(!res);
       done();
     });
@@ -232,12 +232,38 @@ describe('Awis', () => {
   });
 
 
-  it('should allow apostrophe in path when doing CategoryBrowse', (done) => {
+  it('should get category list', (done) => {
+
+    Awis(options)({
+      'Action': 'CategoryListings',
+      'ResponseGroup': 'Listings',
+      'Path': 'Top/Shopping/Clothing'
+    }, (err, res) => {
+
+      Assert.ok(!err);
+      Assert.equal(typeof res.categoryListings.recursiveCount, 'string');
+      Assert.equal(typeof res.categoryListings.count, 'string');
+      Assert.equal(typeof res.categoryListings.listings, 'object');
+      Assert.ok(res.categoryListings.listings.listing.length > 0);
+
+      res.categoryListings.listings.listing.forEach((listing) => {
+
+        Assert.equal(typeof listing.dataUrl, 'string');
+        Assert.equal(typeof listing.title, 'string');
+        Assert.equal(typeof listing.popularityRank, 'string');
+      });
+
+      done();
+    });
+  });
+
+
+  it.skip('should allow apostrophe in path when doing CategoryBrowse', (done) => {
 
     Awis(options)({
       Action: 'CategoryBrowse',
       ResponseGroup: 'Categories',
-      Path: 'Top/Shopping/Clothing/Children\'s'
+      Path: 'Top/Shopping/Clothing/Martin\'s'
     }, (err, res) => {
 
       Assert.ok(!err);
@@ -268,7 +294,7 @@ describe('Awis', () => {
       Assert.equal(res.topSites.country.countryName, 'Peru');
       Assert.equal(res.topSites.country.countryCode, 'PE');
       Assert.equal(typeof res.topSites.country.totalSites, 'string');
-      Assert.equal(res.topSites.country.sites.site.length, 100);
+      Assert.equal(res.topSites.country.sites.site.length, 99);
 
       res.topSites.country.sites.site.forEach((site) => {
 

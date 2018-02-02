@@ -1,10 +1,10 @@
 'use strict';
 
-const Util = require('util');
-const Crypto = require('crypto');
 const _ = require('lodash');
 const Xml2js = require('xml2js');
 const Request = require('request');
+const Url = require('url');
+const Aws4 = require('aws4');
 
 
 const internals = {};
@@ -129,48 +129,43 @@ internals.parse = function (xml, req, cb) {
 };
 
 
-internals.query = function (req, apiDomain, options) {
-
-  req.SignatureMethod = 'HmacSHA256';
-  req.SignatureVersion = 2;
-  req.AWSAccessKeyId = options.key;
-  req.Timestamp = new Date().toISOString();
-
-  // Sign...
-  // Request keys must be sorted with natural byte ordering.
-  // http://docs.aws.amazon.com/AlexaWebInfoService/latest/index.html?CalculatingSignatures.html
-  const keys = Object.keys(req).sort();
-  const q = keys.reduce((memo, k) => {
-
-    if (memo) {
-      memo += '&';
-    }
-    // Manually replace single quotes with `%27` as `encodeURIComponent` doesnt
-    // seem to encode them, and things break:
-    // https://github.com/wrangr/awis/issues/3
-    const value = encodeURIComponent(req[k]).replace(/'/g, '%27');
-    return memo + encodeURIComponent(k) + '=' + value;
-  }, '');
-  const tmpl = 'GET\n%s\n/\n%s';
-  const stringToSign = Util.format(tmpl, apiDomain, q);
-  const signature = Crypto.createHmac('SHA256', options.secret);
-  signature.update(stringToSign);
-  req.Signature = signature.digest('base64');
-
-  return req;
-};
-
-
 module.exports = function (options) {
 
   return function (req, cb) {
 
-    const apiDomain = (req.Action === 'TopSites') ? 'ats.amazonaws.com' : 'awis.amazonaws.com';
+    const region = options.region || 'us-west-1';
+    const host = (req.Action === 'TopSites') ? `ats.${region}.amazonaws.com` : `awis.${region}.amazonaws.com`;
+    const service = (req.Action === 'TopSites') ? 'AlexaTopSites' : 'awis';
+    const pathname = '/api';
 
-    Request({
-      url: 'https://' + apiDomain,
-      qs: internals.query(req, apiDomain, options)
-    }, (err, res) => {
+    const search = Object.keys(req).sort().reduce((memo, k) => {
+
+      if (memo) {
+        memo += '&';
+      }
+      // Manually replace single quotes with `%27` as `encodeURIComponent` doesnt
+      // seem to encode them, and things break:
+      // https://github.com/wrangr/awis/issues/3
+      const value = encodeURIComponent(req[k]).replace(/'/g, '%27');
+      return memo + encodeURIComponent(k) + '=' + value;
+    }, '');
+
+    const path = pathname + '?' + search;
+    const url = Url.format({ protocol: 'https:', host, pathname, search });
+
+    const signOpts = {
+      url,
+      host,
+      service,
+      path
+    };
+
+    const signRes = Aws4.sign(signOpts, {
+      accessKeyId: options.key,
+      secretAccessKey: options.secret
+    });
+
+    Request(signRes, (err, res) => {
 
       if (err) {
         return cb(err);
