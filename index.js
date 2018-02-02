@@ -5,7 +5,6 @@ const Xml2js = require('xml2js');
 const Request = require('request');
 const Url = require('url');
 const Aws4 = require('aws4');
-const Querystring = require('querystring');
 
 
 const internals = {};
@@ -134,15 +133,23 @@ module.exports = function (options) {
 
   return function (req, cb) {
 
-    const host = (req.Action === 'TopSites') ? 'ats.us-west-1.amazonaws.com' : 'awis.us-west-1.amazonaws.com';
+    const region = options.region || 'us-west-1';
+    const host = (req.Action === 'TopSites') ? `ats.${region}.amazonaws.com` : `awis.${region}.amazonaws.com`;
     const service = (req.Action === 'TopSites') ? 'AlexaTopSites' : 'awis';
     const pathname = '/api';
-    const search = Querystring.stringify(req, null, null, {
-      encodeURIComponent(uriComponent) {
 
-        return Querystring.escape(uriComponent).replace(/'/g, '%27');
+    const search = Object.keys(req).sort().reduce((memo, k) => {
+
+      if (memo) {
+        memo += '&';
       }
-    });
+      // Manually replace single quotes with `%27` as `encodeURIComponent` doesnt
+      // seem to encode them, and things break:
+      // https://github.com/wrangr/awis/issues/3
+      const value = encodeURIComponent(req[k]).replace(/'/g, '%27');
+      return memo + encodeURIComponent(k) + '=' + value;
+    }, '');
+
     const path = pathname + '?' + search;
     const url = Url.format({ protocol: 'https:', host, pathname, search });
 
