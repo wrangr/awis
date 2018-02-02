@@ -46,6 +46,16 @@ client({
 });
 ```
 
+Specify region (default is `us-west-1`):
+
+```javascript
+var client = awis({
+  key: process.env.AWSACCESSKEYID,
+  secret: process.env.AWSSECRETACCESSKEY,
+  region: 'eu-west-1'
+});
+```
+
 Batch request:
 
 ```js
