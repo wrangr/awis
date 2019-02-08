@@ -133,7 +133,7 @@ module.exports = function (options) {
 
   return function (req, cb) {
 
-    const region = options.region || 'us-west-1';
+    const region = (options && options.region) || process.env.AWS_REGION || 'us-west-1';
     const host = (req.Action === 'TopSites') ? `ats.${region}.amazonaws.com` : `awis.${region}.amazonaws.com`;
     const service = (req.Action === 'TopSites') ? 'AlexaTopSites' : 'awis';
     const pathname = '/api';
@@ -160,10 +160,24 @@ module.exports = function (options) {
       path
     };
 
-    const signRes = Aws4.sign(signOpts, {
-      accessKeyId: options.key,
-      secretAccessKey: options.secret
-    });
+    let signRes;
+
+    if (!options) {
+      signRes = Aws4.sign(signOpts);
+    }
+    else if (options.token) {
+      signRes = Aws4.sign(signOpts, {
+        accessKeyId: options.key,
+        secretAccessKey: options.secret,
+        sessionToken: options.token
+      });
+    }
+    else {
+      signRes = Aws4.sign(signOpts, {
+        accessKeyId: options.key,
+        secretAccessKey: options.secret
+      });
+    }
 
     Request(signRes, (err, res) => {
 
